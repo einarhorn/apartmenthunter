@@ -1,5 +1,6 @@
 Apartment Hunting website for UIUC students. Written in Flask.
 
+![Landing page screenshot](https://raw.githubusercontent.com/einarhorn/apartmenthunter/master/screenshots/home-page.png)
 This project is a work in progress, and will hopefully be expanded upon Spring 2018.
 Currently, the app pulls data from two leasing agencies in the Urbana-Champaign area: JSM and CPM.
 
