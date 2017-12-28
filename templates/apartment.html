@@ -1,0 +1,356 @@
+<html>
+<head>
+    <link rel="stylesheet" href="https://bootswatch.com/2/amelia/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://bootswatch.com/2/default/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="https://bootswatch.com/2/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://bootswatch.com/2/css/bootswatch.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://bootswatch.com/2/js/jquery.smooth-scroll.min.js"></script>
+    <script src="https://bootswatch.com/2/js/bootstrap.min.js"></script>
+    <script src="https://bootswatch.com/2/js/bootswatch.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/css/select2.min.css" rel="stylesheet"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.css" rel="stylesheet"> <!-- 3 KB -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.js"></script> <!-- 16 KB -->
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/style.css') }}">
+    <title>ApartmentHunter</title>
+</head>
+<body style="background-color:white;    background-image: -webkit-radial-gradient(circle,#ffffff,#e2e2e2);">
+
+
+<div>
+    <div class="navbar navbar-custom">
+        <div class="navbar-inner">
+            <div class="container container-custom">
+                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+                <a class="brand brand-custom" href="..">
+                    Apartment Hunter
+                </a>
+                <div class="nav-collapse">
+                    <ul class="nav cabin-font">
+                        <li><a href="..">Home</a></li>
+                        <li class="active"><a href="../apartments">Apartments</a></li>
+                        <li><a href="../map">Map</a></li>
+                        <li><a href="../agencies">Leasing Agencies</a></li>
+                    </ul>
+                    <form class="navbar-search pull-right" action="/apartments" method="get">
+                        <input type="text" name="search-keyword" class="search-query span2 search-query-height" placeholder="Search">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="apartment-container">
+    <h1 class="apartment-title">
+        {{ apartment['name'] }}
+        <span class="apartment-subtitle">{{ apartment['address'] }}</span>
+    </h1>
+    <div class="apartment-header">
+        <div class="apartment-price">
+            <strong class="apartment-price-text">${{ apartment['price'] }}</strong>
+            <span class="apartment-price-label">Per Month</span>
+        </div>
+        <div class="apartment-link-container">
+            <a href="{{ apartment['url'] }}">
+                <button type="button" class="btn--default">
+                    <i class="fa fa-refresh"></i>Apartment Website
+                </button>
+            </a>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="fotorama" data-nav="thumbs" data-width="100%"
+         data-ratio="800/600" style="margin-top:30px;">
+        {% for image in apartment['images'] %}
+        <img src="{{ image['url'] }}">
+        {% endfor %}
+    </div>
+    <div class="apartment-infos">
+        <div class="apartment-info-item">Leasing Agency: <strong>{{ apartment['company'] }}</strong></div>
+        <div class="apartment-info-item">Bedrooms: <strong>{{ apartment['bedrooms'] }}</strong></div>
+        <div class="apartment-info-item">Bathrooms: <strong>{{ apartment['bathrooms'] }}</strong></div>
+        <!--<div class="apartment-info-item">Size: <strong>{{ apartment['size'] }}</strong></div>-->
+    </div>
+    <div class="clearfix"></div>
+    <div class="apartment-property-container">
+        <h4 class="apartment-property-title">Description</h4>
+        <div>
+            {{ apartment['description'] }}
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="apartment-property-container">
+        <h4 class="apartment-property-title">Amenities</h4>
+        <ul class="apartment-property-list apartment-property-list-options">
+            {% for amenity in apartment['amenities'] %}
+            <li>{{ amenity['amenity'] }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="clearfix"></div>
+    <div class="apartment-property-container">
+        <h4 class="apartment-property-title">Location</h4>
+        <div id="map_wrapper">
+            <div id="map_canvas" class="mapping"></div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="apartment-property-container">
+        <h4 class="apartment-property-title">Reviews</h4>
+        <div id="apartment-rating-container">
+            {% for rating in apartment['ratings'] %}
+            <div style="border-bottom: 1px solid lightgrey;">
+                <div>
+                    <div class="non-interactive-stars">
+                        <label for="star-{{rating['id']}}-5" style="cursor:text;
+                        {%if rating['value'] >= 5 %}
+                        color: gold;
+                        {% endif %}
+                        "
+                        ></label>
+                        <label for="star-{{rating['id']}}-4" style="cursor:text;
+                        {%if rating['value'] >= 4 %}
+                        color: gold;
+                        {% endif %}
+                        "
+                        ></label>
+                        <label for="star-{{rating['id']}}-3" style="cursor:text;
+                        {%if rating['value'] >= 3 %}
+                        color: gold;
+                        {% endif %}
+                        "
+                        ></label>
+                        <label for="star-{{rating['id']}}-2" style="cursor:text;
+                        {%if rating['value'] >= 2 %}
+                        color: gold;
+                        {% endif %}>
+                        "
+                        ></label>
+                        <label for="star-{{rating['id']}}-1" style="cursor:text;
+                        {%if rating['value'] >= 1 %}
+                        color: gold;
+                        {% endif %}
+                        "
+                        ></label>
+                    </div>
+                </div>
+                <div>
+                    <p style="margin-left:5px;">{{ rating['text'] }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="apartment-property-container" id="apartment-leave-review-container">
+        <h4 class="apartment-property-title">Leave a review</h4>
+        <section class="comment-container" style="margin-top:20px; padding-top:0px;padding-bottom:100px;">
+            <div class="stars">
+                <input id="star-rating-5" data-star-id="5" type="radio" name="star"/>
+                <label for="star-rating-5"></label>
+                <input id="star-rating-4" data-star-id="4" type="radio" name="star"/>
+                <label for="star-rating-4"></label>
+                <input id="star-rating-3" data-star-id="3" type="radio" name="star"/>
+                <label for="star-rating-3"></label>
+                <input id="star-rating-2" data-star-id="2" type="radio" name="star"/>
+                <label for="star-rating-2"></label>
+                <input id="star-rating-1" data-star-id="1" type="radio" name="star"/>
+                <label for="star-rating-1"></label>
+            </div>
+
+            <textarea class="commentBox" placeholder="Place your comments here" type="textarea"></textarea>
+            <p><span class="counter">1000</span> Characters left</p>
+            <button id="post-review-button">Post</button>
+        </section>
+    </div>
+
+
+</div>
+    <script>
+        // Tutorial for setting up Google map markers
+        // https://wrightshq.com/playground/placing-multiple-markers-on-a-google-map-using-api-3/
+        jQuery(function($) {
+            // Asynchronously Load the map API
+            var script = document.createElement('script');
+            script.src = "//maps.googleapis.com/maps/api/js?key=AIzaSyBeQ1uMl4WmitzU7gaMcJus-Nq_0DSa9Ps&callback=initialize";
+            document.body.appendChild(script);
+
+            setupRatingSection();
+        });
+
+        /**
+         *Set up Google Map API
+         */
+        function initialize() {
+            var map;
+            var bounds = new google.maps.LatLngBounds();
+            var mapOptions = {
+                mapTypeId: 'roadmap'
+            };
+
+            // Display a map on the page
+            map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+            map.setTilt(45);
+
+            var apartments = [{{ apartment|tojson|safe }}];
+            console.log(apartments);
+            // Display multiple markers on a map
+            var infoWindow = new google.maps.InfoWindow(), marker, i;
+
+            // Loop through our array of markers & place each one on the map
+            for( i = 0; i < apartments.length; i++ ) {
+                var position = new google.maps.LatLng(apartments[i]['lat'], apartments[i]['lng']);
+                bounds.extend(position);
+                marker = new google.maps.Marker({
+                    position: position,
+                    map: map,
+                    title: apartments[i]['name']
+                });
+
+                // Allow each marker to have an info window
+                google.maps.event.addListener(marker, 'click', (function(marker, i) {
+                    return function() {
+                        var content = '<div class="info_content">' +
+                            '<h3>' + apartments[i]['name'] + '</h3>' +
+                            '<p>' + apartments[i]['description'] + '</p>' +
+                            '</div>'
+                        infoWindow.setContent(content);
+                        infoWindow.open(map, marker);
+                    }
+                })(marker, i));
+
+                // Automatically center the map fitting all markers on the screen
+                map.fitBounds(bounds);
+            }
+
+            // Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
+            var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
+                this.setZoom(16);
+                google.maps.event.removeListener(boundsListener);
+            });
+
+        }
+
+        function setupRatingSection() {
+            // Comment system inspired by https://codepen.io/johnsonisme/pen/NqozOq
+            // Star rating HTML: https://jsfiddle.net/mindplay/dsh53cnr/
+
+            // Extract the selected number of stars for the review
+            var selectedStar = 0;
+            $('.stars').click(function(e) {
+                selectedStar = $(e.target).attr('data-star-id');
+
+                var commentLength = $('.commentBox').val().length;
+                if (commentLength == 0) {
+                    $('#post-review-button').attr('disabled', 'true');
+                } else {
+                    $('#post-review-button').removeAttr('disabled', 'true');
+                }
+            });
+
+            // Click listener on review button
+            $('#post-review-button').click(function() {
+                // Set button to be disabled
+                $('#post-review-button').attr('disabled', 'true');
+
+                // Get comment text
+                var comment = $('.commentBox').val();
+
+                // Create data object, to send to server
+                var data = {
+                    'id': {{ id }},
+                    'rating': selectedStar,
+                    'comment': comment
+                };
+
+                // Reset comment box
+                $('.counter').text('1000');
+                $('.commentBox').val('');
+
+                // Post data to server
+                $.ajax({
+                    url: '/saveReview',
+                    data: data,
+                    type: 'POST',
+                    success: function(response) {
+                        console.log("Success");
+
+                        // Calculate number of stars to show
+                        var starString5 = (data['rating'] >= 5) ? "color:gold;" : "";
+                        var starString4 = (data['rating'] >= 4) ? "color:gold;" : "";
+                        var starString3 = (data['rating'] >= 3) ? "color:gold;" : "";
+                        var starString2 = (data['rating'] >= 2) ? "color:gold;" : "";
+                        var starString1 = (data['rating'] >= 1) ? "color:gold;" : "";
+
+                        // Template for html to insert
+                        var htmlToInsert = '<div style="border-bottom: 1px solid lightgrey;">\
+                            <div>\
+                                <div class="non-interactive-stars">\
+                                    <label for="star-recent-5" style="cursor:text;{0}"></label>\
+                                    <label for="star-recent-4" style="cursor:text;{1}"></label>\
+                                    <label for="star-recent-3" style="cursor:text;{2}"></label>\
+                                    <label for="star-recent-2" style="cursor:text;{3}"></label>\
+                                    <label for="star-recent-1" style="cursor:text;{4}"></label>\
+                                </div>\
+                            </div>\
+                            <div>\
+                                <p style="margin-left:5px;">{5}</p>\
+                            </div>\
+                        </div>'
+
+                        // Format template string
+                        htmlToInsert = htmlToInsert.replace("{0}", starString5);
+                        htmlToInsert = htmlToInsert.replace("{1}", starString4);
+                        htmlToInsert = htmlToInsert.replace("{2}", starString3);
+                        htmlToInsert = htmlToInsert.replace("{3}", starString2);
+                        htmlToInsert = htmlToInsert.replace("{4}", starString1);
+                        htmlToInsert = htmlToInsert.replace("{5}", comment);
+
+                        // Insert html into page
+                        $("#apartment-rating-container").append(htmlToInsert);
+
+                        // Hide 'Leave review' section
+                        $("#apartment-leave-review-container").fadeOut();
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+                //$('<li>').text(comment).prependTo('.comments');
+
+            });
+
+            $('.commentBox').keyup(function() {
+                var commentLength = $(this).val().length;
+                var charLeft =  1000 - commentLength;
+                $('.counter').text(charLeft);
+
+                if (commentLength == 0) {
+                    $('#post-review-button').attr('disabled', 'true');
+                } else if (commentLength > 1000) {
+                    $('#post-review-button').attr('disabled', 'true');
+                } else if (selectedStar == 0) {
+                    $('#post-review-button').attr('disabled', 'true');
+                } else {
+                    $('#post-review-button').removeAttr('disabled', 'true');
+                }
+            });
+
+            $('#post-review-button').attr('disabled', 'true');
+
+        }
+
+    </script>
+</body>
+</html>

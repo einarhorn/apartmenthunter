@@ -1,0 +1,347 @@
+<html>
+<head>
+    <link rel="stylesheet" href="https://bootswatch.com/2/amelia/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://bootswatch.com/2/default/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="https://bootswatch.com/2/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://bootswatch.com/2/css/bootswatch.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://bootswatch.com/2/js/jquery.smooth-scroll.min.js"></script>
+    <script src="https://bootswatch.com/2/js/bootstrap.min.js"></script>
+    <script src="https://bootswatch.com/2/js/bootswatch.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+    <title>ApartmentHunter</title>
+</head>
+
+<body style="background-color:white;    background-image: -webkit-radial-gradient(circle,#ffffff,#e2e2e2);">
+
+<!--Listing style inspired by:-->
+<!--http://demo.codefactory47.com/realtyspace/index.html-->
+<!--http://inspirythemes.biz/html-templates/realhomes-html/-->
+
+<div>
+    <div class="navbar navbar-custom">
+        <div class="navbar-inner">
+            <div class="container container-custom">
+                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+                <a class="brand brand-custom" href=".">
+                    Apartment Hunter
+                </a>
+                <div class="nav-collapse">
+                    <ul class="nav cabin-font">
+                        <li><a href=".">Home</a></li>
+                        <li><a href="apartments">Apartments</a></li>
+                        <li class="active"><a href="#">Map</a></li>
+                        <li><a href="agencies">Leasing Agencies</a></li>
+                    </ul>
+                    <form class="navbar-search pull-right" action="apartments" method="get">
+                        <input type="text" name="search-keyword" class="search-query span2 search-query-height" placeholder="Search">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="search-apartments">
+        <div class="form-container">
+            <form class="search-apartments-form clearfix" action="#" method="get">
+                <div class="option-bar large">
+                    <label for="search-keyword">
+                        Keyword
+                    </label>
+                    <input type="text" name="search-keyword" id="search-keyword" value="" placeholder="Any">
+                </div>
+                <div class="option-bar large">
+                    <label for="agency">
+                        Leasing Agency
+                    </label>
+                    <span class="select2-span-wrapper">
+                        <select name="agency" id="agency" class="search-select">
+                            <option value="any" selected="selected">Any</option>
+                            <option value="jsm">JSM</option>
+                            <option value="cpm">CPM</option>
+                        </select>
+                    </span>
+                </div>
+                <div class="option-bar small">
+                    <label for="select-min-price">
+                        Min Price
+                    </label>
+                    <span class="select2-span-wrapper">
+                        <select name="min-price" id="select-min-price" class="search-select small-select">
+                            <option value="any" selected="selected">Any</option>
+                            <option value="200">$200</option>
+                            <option value="250">$250</option>
+                            <option value="300">$300</option>
+                            <option value="350">$350</option>
+                            <option value="400">$400</option>
+                            <option value="450">$450</option>
+                            <option value="500">$500</option>
+                            <option value="550">$550</option>
+                            <option value="600">$600</option>
+                            <option value="650">$650</option>
+                            <option value="700">$700</option>
+                            <option value="750">$750</option>
+                            <option value="800">$800</option>
+                            <option value="850">$850</option>
+                            <option value="900">$900</option>
+                            <option value="950">$950</option>
+                            <option value="1000">$1000</option>
+                            <option value="1100">$1100</option>
+                            <option value="1200">$1200</option>
+                            <option value="1300">$1300</option>
+                            <option value="1400">$1400</option>
+                            <option value="1500">$1500</option>
+                        </select>
+                    </span>
+                </div>
+                <div class="option-bar small">
+                    <label for="select-max-price">
+                        Max Price
+                    </label>
+                    <span class="select2-span-wrapper">
+                        <select name="max-price" id="select-max-price" class="search-select small-select">
+                            <option value="any" selected="selected">Any</option>
+                            <option value="200">$200</option>
+                            <option value="250">$250</option>
+                            <option value="300">$300</option>
+                            <option value="350">$350</option>
+                            <option value="400">$400</option>
+                            <option value="450">$450</option>
+                            <option value="500">$500</option>
+                            <option value="550">$550</option>
+                            <option value="600">$600</option>
+                            <option value="650">$650</option>
+                            <option value="700">$700</option>
+                            <option value="750">$750</option>
+                            <option value="800">$800</option>
+                            <option value="850">$850</option>
+                            <option value="900">$900</option>
+                            <option value="950">$950</option>
+                            <option value="1000">$1000</option>
+                            <option value="1100">$1100</option>
+                            <option value="1200">$1200</option>
+                            <option value="1300">$1300</option>
+                            <option value="1400">$1400</option>
+                            <option value="1500">$1500</option>
+                            <option value="1600">$1600</option>
+                            <option value="1700">$1700</option>
+                            <option value="1800">$1800</option>
+                            <option value="1900">$1900</option>
+                            <option value="2000">$2000</option>
+                            <option value="3000">$3000</option>
+                        </select>
+                    </span>
+                </div>
+                <div class="option-bar small">
+                    <label for="min-bedrooms">
+                        Min Bedrooms
+                    </label>
+                    <span class="select2-span-wrapper">
+                        <select name="min-bedrooms" id="min-bedrooms" class="search-select small-select">
+                            <option value="any" selected="selected">Any</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </span>
+                </div>
+                <div class="option-bar small">
+                    <label for="max-bedrooms">
+                        Max Bedrooms
+                    </label>
+                    <span class="select2-span-wrapper">
+                        <select name="max-bedrooms" id="max-bedrooms" class="search-select small-select">
+                            <option value="any" selected="selected">Any</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </span>
+                </div>
+                <div class="option-bar small">
+                    <label for="min-bathrooms">
+                        Min Bathrooms
+                    </label>
+                    <span class="select2-span-wrapper">
+                        <select name="min-bathrooms" id="min-bathrooms" class="search-select small-select">
+                            <option value="any" selected="selected">Any</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </span>
+                </div>
+                <div class="option-bar small">
+                    <label for="max-bathrooms">
+                        Max Bathrooms
+                    </label>
+                    <span class="select2-span-wrapper">
+                        <select name="max-bathrooms" id="max-bathrooms" class="search-select small-select">
+                            <option value="any" selected="selected">Any</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </span>
+                </div>
+                <div class="option-bar">
+                    <input type="submit" value="Search" class="real-btn btn">
+                </div>
+                <div class="clearfix"></div>
+            </form>
+        </div>
+    </section>
+
+<div id="map_wrapper">
+    <div id="map_canvas" class="mapping"></div>
+</div>
+
+
+<script>
+
+    /**
+     * Set up search2 plugin for search capabilities
+     */
+    function setUpSearch() {
+        $('#agency').select2();
+        $('#select-min-price').select2();
+        $('#select-max-price').select2();
+        $('#min-bedrooms').select2();
+        $('#max-bedrooms').select2();
+        $('#min-bathrooms').select2();
+        $('#max-bathrooms').select2();
+    }
+
+    /**
+     * Set up filters for search
+     */
+    function setUpFilters() {
+        // Get filter dictionary from Flask
+
+        var filters = {{ filter|tojson|safe }};
+
+        // Filter based on entries in dictionary
+
+        if (filters['keywords']) {
+            $("#search-keyword").val(filters['keywords']);
+        }
+
+        if (filters['agency']) {
+            $("#agency").val(filters['agency']).trigger('change');
+        }
+
+        if (filters['min_price']) {
+            $("#select-min-price").val(filters['min_price']).trigger('change');
+        }
+
+        if (filters['max_price']) {
+            $("#select-max-price").val(filters['max_price']).trigger('change');
+        }
+
+        if (filters['min_bedrooms']) {
+            $("#min-bedrooms").val(filters['min_bedrooms']).trigger('change');
+        }
+
+        if (filters['max_bedrooms']) {
+            $("#max-bedrooms").val(filters['max_bedrooms']).trigger('change');
+        }
+
+        if (filters['min_bedrooms']) {
+            $("#min-bathrooms").val(filters['min_bathrooms']).trigger('change');
+        }
+
+        if (filters['max_bedrooms']) {
+            $("#max-bathrooms").val(filters['max_bathrooms']).trigger('change');
+        }
+    }
+
+    /**
+     * Run on initialization
+     */
+    $(document).ready(function() {
+        setUpSearch();
+        setUpFilters();
+    });
+
+    // Tutorial for setting up Google map markers
+    // https://wrightshq.com/playground/placing-multiple-markers-on-a-google-map-using-api-3/
+
+    jQuery(function($) {
+        // Asynchronously Load the map API
+        var script = document.createElement('script');
+        script.src = "//maps.googleapis.com/maps/api/js?key=AIzaSyBeQ1uMl4WmitzU7gaMcJus-Nq_0DSa9Ps&callback=initialize";
+        document.body.appendChild(script);
+    });
+
+    /**
+     *Set up Google Map API
+     */
+    function initialize() {
+        // Display a map on the page
+        var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+        map.setTilt(45);
+
+        // Set map options and bounds
+        var bounds = new google.maps.LatLngBounds();
+        var mapOptions = {
+            mapTypeId: 'roadmap'
+        };
+
+        // Get apartment list
+        var apartments = {{ apartments|tojson|safe }};
+
+        // Display multiple markers on a map
+        var infoWindow = new google.maps.InfoWindow(), marker, i;
+
+        // Loop through our array of markers & place each one on the map
+        for( i = 0; i < apartments.length; i++ ) {
+            var position = new google.maps.LatLng(apartments[i]['lat'], apartments[i]['lng']);
+            bounds.extend(position);
+            marker = new google.maps.Marker({
+                position: position,
+                map: map,
+                title: apartments[i]['name']
+            });
+
+            // Allow each marker to have an info window
+            google.maps.event.addListener(marker, 'click', (function(marker, i) {
+                return function() {
+                    var content = '<div class="info_content">' +
+                        '<h3><a href="apartments/detail?id=' + apartments[i]['id'] + '">' + apartments[i]['name'] + '</a></h3>' +
+                        '<p>' + apartments[i]['description'] + '</p>' +
+                        '</div>'
+                    infoWindow.setContent(content);
+                    infoWindow.open(map, marker);
+                }
+            })(marker, i));
+
+            // Automatically center the map fitting all markers on the screen
+            map.fitBounds(bounds);
+        }
+
+        // Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
+        var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
+            this.setZoom(14);
+            google.maps.event.removeListener(boundsListener);
+        });
+    }
+</script>
+</body>
+</html>
+
